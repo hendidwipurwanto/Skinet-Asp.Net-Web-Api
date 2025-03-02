@@ -65,6 +65,17 @@ namespace API.Controllers
 
             return BadRequest("Problem updating the product");
         }
+        [HttpGet("brands")]
+        public async Task<ActionResult<IReadOnlyList<string>>> GetBrands()
+        {
+            return Ok(await _repo.GetBrandsAsync());
+        }
+
+        [HttpGet("types")]
+        public async Task<ActionResult<IReadOnlyList<string>>> GetTypes()
+        {
+            return Ok(await _repo.GetTypesAsync());
+        }
 
         private bool ProductExist(int id)
         {
