@@ -29,6 +29,11 @@ namespace Infrastructure.Data
             _context.products.Remove(product);
         }
 
+        public async Task<IReadOnlyList<string>> GetBrandsAsync()
+        {
+            return await _context.products.Select(x => x.Brand).Distinct().ToListAsync();
+        }
+
         public async Task<Product?> GetProductByIdAsync(int id)
         {
             return await _context.products.FindAsync(id);
@@ -37,6 +42,11 @@ namespace Infrastructure.Data
         public async Task<IReadOnlyList<Product>> GetProductsAsync()
         {
             return await _context.products.ToArrayAsync();
+        }
+
+        public async Task<IReadOnlyList<string>> GetTypesAsync()
+        {
+            return await _context.products.Select(x => x.Type).Distinct().ToListAsync();
         }
 
         public bool ProductExist(int id)
