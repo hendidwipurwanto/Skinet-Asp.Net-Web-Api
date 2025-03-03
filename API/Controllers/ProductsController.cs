@@ -12,15 +12,8 @@ namespace API.Controllers
     [ApiController]
     public class ProductsController(IProductRepository _repo) : ControllerBase
     {
-
-       
-        [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts()
-        {
-            return Ok(await _repo.GetProductsAsync());
-           
-        }
-
+        
+      
         // GET api/<ProductsController>/5
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
@@ -82,6 +75,11 @@ namespace API.Controllers
             return _repo.ProductExist(id);
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts(string? brand,string? type)
+        {
+            return Ok(await _repo.GetProductsAsync(brand, type)); 
+        }
              
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteProduct(int id)
