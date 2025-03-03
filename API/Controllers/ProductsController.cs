@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Core.Specifications;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -81,7 +82,10 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts(string? brand,string? type, string? sort)
         {
-            return Ok(await _repo.ListAllAsync()); 
+            var spec = new ProductSpecification(brand, type);
+            var producs = await _repo.ListAsync(spec);
+
+            return Ok(producs); 
         }
              
         [HttpDelete("{id:int}")]
