@@ -2,9 +2,7 @@
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
-using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,7 +10,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController(IGenericRepository<Product> _repo) : ControllerBase
+    public class ProductsController(IGenericRepository<Product> _repo) : BaseApiController
     {
         
       
@@ -85,12 +83,8 @@ namespace API.Controllers
         public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts([FromQuery]ProductSpecParams specParams)
         {
             var spec = new ProductSpecification(specParams);
-            var products = await _repo.ListAsync(spec);
-            var count = await _repo.CountAsync(spec);
 
-            var pagination = new Pagination<Product>(specParams.PageIndex, specParams.PageSize, count, products);
-
-            return Ok(pagination); 
+            return await CreatePageResult(_repo, spec, specParams.PageIndex, specParams.PageSize); 
         }
              
         [HttpDelete("{id:int}")]
