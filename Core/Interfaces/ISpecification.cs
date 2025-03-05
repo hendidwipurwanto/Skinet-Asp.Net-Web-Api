@@ -14,7 +14,11 @@ namespace Core.Interfaces
         Expression<Func<T, object>>? OrderByDescending { get; }
 
         bool IsDistinct { get; }
+        int Take { get; }
+        int Skip { get; }
 
+        bool isPagingEnabled { get;  }
+        IQueryable<T> ApplyCriteria(IQueryable<T> query);
     }
     public interface ISpecification<T,TResult> :ISpecification<T>
     {

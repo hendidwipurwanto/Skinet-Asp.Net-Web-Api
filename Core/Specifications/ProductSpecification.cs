@@ -14,6 +14,7 @@ namespace Core.Specifications
             (specParams.Types.Count == 0 || specParams.Types.Contains(x.Type))
         )
         {
+            ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
             switch(specParams.Sort)
             {
                 case "priceAsc":

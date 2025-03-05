@@ -8,6 +8,17 @@ namespace Core.Specifications
 {
     public class ProductSpecParams
     {
+        private const int MazPageSize = 50;
+
+        public int PageIndex { get; set; } = 1;
+
+        private int _pageSize = 6;
+        public int PageSize
+        {
+            get => _pageSize;
+            set => _pageSize = (value > MazPageSize) ? MazPageSize : value;
+        }
+
         private List<string> _brands = [];
         public List<string> Brands
         {
